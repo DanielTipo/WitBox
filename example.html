@@ -1,0 +1,48 @@
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="templates.js"></script>
+<script src="witbox.min.js"></script>
+<script src="modals.min.js"></script>
+<link rel="stylesheet" href="css.css">
+</head>
+<body>
+<button class="click-confirm">Confirm</button><button class="click-alert">Alert</button><button class="click-yt">Youtube</button><button class="click-galery">Galery</button>
+
+<script>
+$(document).ready(function(){
+  
+  var someCallback = function(e, x) { 
+    $('.click-confirm').text(x.params); 
+  };
+  
+  $('.click-confirm').click(function() {
+    WitBoxFactory.showConfirm('Some asking dialog', new WitBox.Callback(someCallback, 'success'), new WitBox.Callback(someCallback, 'failure') );
+  });
+  
+  $('.click-alert').click(function() {
+    WitBoxFactory.showAlert('This is an alert box');
+  });
+  
+  $('.click-yt').click(function() {
+    WitBoxFactory.showYT('1mbo5vHy8dw');
+  });
+  $('.click-galery').click(function() {
+    WitBoxFactory.showGalery([
+      {
+        type: 'yt',
+        id: 'qaOvHKG0Tio'
+      },
+      {
+        type: 'img',
+        url: 'http://upload.wikimedia.org/wikipedia/commons/b/b6/CC_guidant_les_contributeurs.jpg'
+      }
+    ]);
+  });
+  
+});
+
+
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@ JST['confirmmodal']=function(it){var out='<div class="witbox-modal-confirm-text"
 JST['alertmodal']=function(it){var out='<div class="witbox-modal-confirm-text">'+it.text+'</div><div class="witbox-modal-confirm-buttons" style="text-align:center"><button class="ok close">OK</button></div>';return out;};JST['borderedviewport']=function(it){var out='<div class="content"></div><div class="witbox-clearance"></div>';return out;};
 JST['borderedpinnedviewport']=function(it){var out='<div class="close icon-close"></div><div class="content"></div>';return out;};
 JST['pinnedviewport']=function(it){var out='<div class="close icon-close"></div><div class="content"></div>';return out;};
-JST['ytmodal']=function(it){var out='<iframe marginwidth="0" marginheight="0" frameborder="0" width="853" height="480" src="https://www.youtube.com/embed/'+it.yt+'?autoplay=0&rel=0" allowfullscreen></iframe>';return out;};
+JST['ytmodal']=function(it){var out='<iframe marginwidth="0" marginheight="0" frameborder="0" width="853" height="480" src="https://www.youtube.com/embed/'+it.yt+'?autoplay=1&rel=0" allowfullscreen></iframe>';return out;};
 JST['galeryviewport']=function(it){var out='<div class="prev-button"></div><div class="next-button"></div><div class="witbox-centered" style="opacity: 0"><div class="close icon-close"></div><div class="content"></div></div><div class="pages"></div>';return out;};
 JST['galerymodalyt']=function(it){var out='<iframe marginwidth="0" marginheight="0" frameborder="0" src="https://www.youtube.com/embed/'+it.id+'?autoplay=0&rel=0" style="width: 1280px; height: 720px" allowfullscreen></iframe>';return out;};
 JST['galerymodalimg']=function(it){var out = '<img src="'+it.url+'" />'; return out;};

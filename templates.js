@@ -1,6 +1,7 @@
 WitBoxJST=function(){return new Function();};
 WitBoxJST['witbox_modal_confirm']=function(it){var out='<div class="witbox-modal-confirm-text">'+it.text+'</div><div class="witbox-modal-confirm-buttons"><button class="ok close">OK</button><button class="cancel close">Cancel</button></div>';return out;};
-WitBoxJST['witbox_modal_alert']=function(it){var out='<div class="witbox-modal-confirm-text">'+it.text+'</div><div class="witbox-modal-confirm-buttons" style="text-align:center"><button class="ok close">OK</button></div>';return out;};JST['borderedviewport']=function(it){var out='<div class="content"></div><div class="witbox-clearance"></div>';return out;};
+WitBoxJST['witbox_modal_alert']=function(it){var out='<div class="witbox-modal-confirm-text">'+it.text+'</div><div class="witbox-modal-confirm-buttons" style="text-align:center"><button class="ok close">OK</button></div>';return out;};
+WitBoxJST['borderedviewport']=function(it){var out='<div class="content"></div><div class="witbox-clearance"></div>';return out;};
 WitBoxJST['witbox_viewport_bordered']=function(it){var out='<div class="content"></div>';return out;};
 WitBoxJST['witbox_viewport_borderpinned']=function(it){var out='<div class="close icon-close"></div><div class="content"></div>';return out;};
 WitBoxJST['witbox_viewport_pinned']=function(it){var out='<div class="close icon-close"></div><div class="content"></div>';return out;};

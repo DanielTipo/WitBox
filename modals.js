@@ -220,17 +220,17 @@ var GaleryViewport = (function (_super) {
 })(WitBox.Viewport);
 
 WitBoxFactory.showConfirm = function(text, okCallback, cancelCallback) {
-  new WitBox.Composite(BorderedViewport, ConfirmModal, { 'ok': { 'click': okCallback }, 'cancel': { 'click': cancelCallback } }, { 'text': text }).show();
+  new WitBox.Dialog(BorderedViewport, ConfirmModal, { 'ok': { 'click': okCallback }, 'cancel': { 'click': cancelCallback } }, { 'text': text }).show();
 };
 
 WitBoxFactory.showAlert = function(text, okCallback) {
-  new WitBox.Composite(BorderedViewport, AlertModal, { 'ok': { 'click': okCallback } }, { 'text': text }, true).show();
+  new WitBox.Dialog(BorderedViewport, AlertModal, { 'ok': { 'click': okCallback } }, { 'text': text }, true).show();
 };
 
 WitBoxFactory.showYT = function(yt) {
-  new WitBox.Composite(BorderedPinnedViewport, YTModal, null, { 'yt': yt }, true).show();
+  new WitBox.Dialog(BorderedPinnedViewport, YTModal, null, { 'yt': yt }, true).show();
 };
 
 WitBoxFactory.showGalery = function(pages) {
-  new WitBox.Composite(GaleryViewport, null, null, { 'pages': pages }, true).show();
+  new WitBox.Dialog(GaleryViewport, null, null, { 'pages': pages }, true).show();
 };

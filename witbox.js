@@ -122,9 +122,9 @@ var WitBox = {
     return Viewport;
   })()
   ,
-  Composite: (function () {
+  Dialog: (function () {
     var modalCounter = 0;
-    function Composite(Viewport, Modal, Callbacks, Parameters, CloseOnClickOverlay) {
+    function Dialog(Viewport, Modal, Callbacks, Parameters, CloseOnClickOverlay) {
       this.viewport = new Viewport("modal-" + (modalCounter++), CloseOnClickOverlay);
       this.events = { ready: null, open: null, close: null, closed: null };
       if(Modal) {
@@ -143,19 +143,19 @@ var WitBox = {
       if(Parameters)
         this.viewport.parameters = Parameters;
     }
-    Composite.prototype.readyCallback = function (callback) {
+    Dialog.prototype.readyCallback = function (callback) {
       this.events.ready = callback;
     };
-    Composite.prototype.openCallback = function (callback) {
+    Dialog.prototype.openCallback = function (callback) {
       this.events.open = callback;
     };
-    Composite.prototype.closeCallback = function (callback) {
+    Dialog.prototype.closeCallback = function (callback) {
       this.events.close = callback;
     };
-    Composite.prototype.closedCallback = function (callback) {
+    Dialog.prototype.closedCallback = function (callback) {
       this.events.closed = callback;
     };
-    Composite.prototype.show = function () {
+    Dialog.prototype.show = function () {
       var self = this;
       if(self.modal) self.modal.init();
       self.viewport.frame.find('.close').click(function(){ 
@@ -167,7 +167,7 @@ var WitBox = {
       });
       return this;
     };
-    Composite.prototype.hide = function () {
+    Dialog.prototype.hide = function () {
       var self = this;
       if(self.events.close)
         self.events.close.fnc(self.events.close.params);
@@ -177,7 +177,7 @@ var WitBox = {
       });
       return this;
     };
-    return Composite;
+    return Dialog;
   })()
 };
 

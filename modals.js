@@ -219,6 +219,22 @@ var GaleryViewport = (function (_super) {
   return GaleryViewport;
 })(WitBox.Viewport);
 
+var CustomModal = (function (_super) {
+  __extends(CustomModal, _super);
+  function CustomModal(Root) {
+    _super.call(this, Root);
+    this.parameters = { jqobject: {} };
+    this.callbacks = 'custom';
+    this.templateObj = null;
+  }
+  CustomModal.prototype.initTemplate = function () {
+    this.templateObj = this.parameters.jqobject.clone();
+    this.templateObj.appendTo(this.root);
+    this.templateObj.css({ 'opacity': 1, 'visibility': 'visible', 'display': 'block' });
+  };
+  return CustomModal;
+})(WitBox.Modal);
+
 WitBoxFactory.showConfirm = function(text, okCallback, cancelCallback) {
   new WitBox.Dialog(BorderedViewport, ConfirmModal, { 'ok': { 'click': okCallback }, 'cancel': { 'click': cancelCallback } }, { 'text': text }).show();
 };
@@ -234,3 +250,8 @@ WitBoxFactory.showYT = function(yt) {
 WitBoxFactory.showGalery = function(pages) {
   new WitBox.Dialog(GaleryViewport, null, null, { 'pages': pages }, true).show();
 };
+
+WitBoxFactory.show = function(jqobject, callbacks, overlayOnClickExit) {
+  new WitBox.Dialog(BorderedPinnedViewport, CustomModal, callbacks, { 'jqobject': jqobject }, overlayOnClickExit).show();
+};
+

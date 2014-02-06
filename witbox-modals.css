@@ -197,3 +197,9 @@ body{
   border-radius:25px 25px 0px 0px;
   cursor: pointer;
 }
+
+.some-dom-node {
+  background: #fff;
+  text-align: center;
+  padding: 5px;
+}

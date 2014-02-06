@@ -64,7 +64,7 @@ var WitBox = {
         if(typeof this.callbacks[it] == 'undefined') continue;
         for(var c in this.callbacks[it]) {
           if(typeof this.callbacks[it][c] == 'undefined') continue;
-          $(this.root).find('.' + it).on(c, this.callbacks[it][c].call);
+          $(this.root).find(it[0]=='#'?it:'.'+it).on(c, this.callbacks[it][c].call);
         }
       }
     };
@@ -131,9 +131,12 @@ var WitBox = {
         this.modal = new Modal(this.viewport.content);
         this.viewport.modal = this.modal;
         if(Callbacks)
-          for(var it in this.modal.callbacks) {
-            this.modal.callbacks[it] = Callbacks[it] ? Callbacks[it] : [];
-          };
+          if(this.modal.callbacks == 'custom')  
+            this.modal.callbacks = Callbacks;
+          else
+            for(var it in this.modal.callbacks) {
+              this.modal.callbacks[it] = Callbacks[it] ? Callbacks[it] : [];
+            };
         if(Parameters)
           for(var it in this.modal.parameters) {
             this.modal.parameters[it] = Parameters[it] ? Parameters[it] : [];

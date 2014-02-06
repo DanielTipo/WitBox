@@ -1,7 +1,8 @@
+
 var PinnedBubbleViewport = (function (_super) {
   __extends(PinnedBubbleViewport, _super);
   function PinnedBubbleViewport(id) {
-    _super.call(this, id, JST.pinnedviewport(), 'viewport-pinned', 'content', false);
+    _super.call(this, id, JST.witbox_viewport_pinned(), 'viewport-pinned', 'content', false);
     this.parameters = { left: 0, top: 0 };
   }
   PinnedBubbleViewport.prototype.show = function (callback) {
@@ -31,7 +32,7 @@ var PinnedBubbleViewport = (function (_super) {
 var BorderedViewport = (function (_super) {
   __extends(BorderedViewport, _super);
   function BorderedViewport(id, closeOnClickOverlay) {
-    _super.call(this, id, JST.borderedviewport(), 'viewport-bordered', 'content', true, true, closeOnClickOverlay);
+    _super.call(this, id, JST.witbox_viewport_bordered(), 'viewport-bordered', 'content', true, true, closeOnClickOverlay);
   }
   BorderedViewport.prototype.show = function (callback) {
     _super.prototype.show.call(this);
@@ -56,7 +57,7 @@ var ConfirmModal = (function (_super) {
     _super.call(this, Root);
     this.parameters = { text: '' };
     this.callbacks = { 'ok': [], 'cancel': [] };
-    this.templateObj = JST.confirmmodal;
+    this.templateObj = JST.witbox_modal_confirm;
   }
   ConfirmModal.prototype.initTemplate = function () {
     _super.prototype.initTemplate.call(this);
@@ -70,7 +71,7 @@ var AlertModal = (function (_super) {
     _super.call(this, Root);
     this.parameters = { text: '' };
     this.callbacks = { 'ok': [] };
-    this.templateObj = JST.alertmodal;
+    this.templateObj = JST.witbox_modal_alert;
   }
   AlertModal.prototype.initTemplate = function () {
     _super.prototype.initTemplate.call(this);
@@ -81,7 +82,7 @@ var AlertModal = (function (_super) {
 var BorderedPinnedViewport = (function (_super) {
   __extends(BorderedPinnedViewport, _super);
   function BorderedPinnedViewport(id, closeOnClickOverlay) {
-    _super.call(this, id, JST.borderedpinnedviewport(), 'viewport-bordered-pinned', 'content', true, true, closeOnClickOverlay);
+    _super.call(this, id, JST.witbox_viewport_borderpinned(), 'viewport-bordered-pinned', 'content', true, true, closeOnClickOverlay);
   }
   BorderedPinnedViewport.prototype.show = function (callback) {
     _super.prototype.show.call(this);
@@ -105,7 +106,7 @@ var YTModal = (function (_super) {
   function YTModal(Root) {
     _super.call(this, Root);
     this.parameters = { yt: '' };
-    this.templateObj = JST.ytmodal;
+    this.templateObj = JST.witbox_modal_yt;
   }
   YTModal.prototype.initTemplate = function () {
     _super.prototype.initTemplate.call(this);
@@ -117,7 +118,7 @@ var GaleryViewport = (function (_super) {
   __extends(GaleryViewport, _super);
   var pos = 0;
   function GaleryViewport(id, closeOnClickOverlay) {
-    _super.call(this, id, JST.galeryviewport(), 'viewport-galery', 'content', true, false, closeOnClickOverlay);
+    _super.call(this, id, JST.witbox_viewport_galery(), 'viewport-galery', 'content', true, false, closeOnClickOverlay);
     this.parameters = { pages: [] };
   }
   GaleryViewport.prototype.show = function (callback) {
@@ -144,10 +145,10 @@ var GaleryViewport = (function (_super) {
       self.content.empty();
       switch(it.type) {
         case 'img':
-          content = $(JST.galerymodalimg(it));
+          content = $(JST.witbox_modal_galeryimg(it));
           break;
         case 'yt':
-          content = $(JST.galerymodalyt(it));
+          content = $(JST.witbox_modal_galeryyt(it));
           break;
       };
       self.content.append(content);

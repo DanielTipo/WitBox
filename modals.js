@@ -1,8 +1,8 @@
 
-var PinnedBubbleViewport = (function (_super) {
+var PinnedBubbleViewport = (function (_super, WitBoxJST) {
   __extends(PinnedBubbleViewport, _super);
   function PinnedBubbleViewport(id) {
-    _super.call(this, id, JST.witbox_viewport_pinned(), 'viewport-pinned', 'content', false);
+    _super.call(this, id, WitBoxJST.witbox_viewport_pinned(), 'viewport-pinned', 'content', false);
     this.parameters = { left: 0, top: 0 };
   }
   PinnedBubbleViewport.prototype.show = function (callback) {
@@ -27,12 +27,12 @@ var PinnedBubbleViewport = (function (_super) {
     return (b - x > a) ? x : x - a;
   };
   return PinnedBubbleViewport;
-})(WitBox.Viewport);
+})(WitBox.Viewport, WitBoxJST);
 
-var BorderedViewport = (function (_super) {
+var BorderedViewport = (function (_super, WitBoxJST) {
   __extends(BorderedViewport, _super);
   function BorderedViewport(id, closeOnClickOverlay) {
-    _super.call(this, id, JST.witbox_viewport_bordered(), 'viewport-bordered', 'content', true, true, closeOnClickOverlay);
+    _super.call(this, id, WitBoxJST.witbox_viewport_bordered(), 'viewport-bordered', 'content', true, true, closeOnClickOverlay);
   }
   BorderedViewport.prototype.show = function (callback) {
     _super.prototype.show.call(this);
@@ -49,40 +49,40 @@ var BorderedViewport = (function (_super) {
     }, 350);
   };
   return BorderedViewport;
-})(WitBox.Viewport);
+})(WitBox.Viewport, WitBoxJST);
 
-var ConfirmModal = (function (_super) {
+var ConfirmModal = (function (_super, WitBoxJST) {
   __extends(ConfirmModal, _super);
   function ConfirmModal(Root) {
     _super.call(this, Root);
     this.parameters = { text: '' };
     this.callbacks = { 'ok': [], 'cancel': [] };
-    this.templateObj = JST.witbox_modal_confirm;
+    this.templateObj = WitBoxJST.witbox_modal_confirm;
   }
   ConfirmModal.prototype.initTemplate = function () {
     _super.prototype.initTemplate.call(this);
   };
   return ConfirmModal;
-})(WitBox.Modal);
+})(WitBox.Modal, WitBoxJST);
 
-var AlertModal = (function (_super) {
+var AlertModal = (function (_super, WitBoxJST) {
   __extends(AlertModal, _super);
   function AlertModal(Root) {
     _super.call(this, Root);
     this.parameters = { text: '' };
     this.callbacks = { 'ok': [] };
-    this.templateObj = JST.witbox_modal_alert;
+    this.templateObj = WitBoxJST.witbox_modal_alert;
   }
   AlertModal.prototype.initTemplate = function () {
     _super.prototype.initTemplate.call(this);
   };
   return AlertModal;
-})(WitBox.Modal);
+})(WitBox.Modal, WitBoxJST);
 
-var BorderedPinnedViewport = (function (_super) {
+var BorderedPinnedViewport = (function (_super, WitBoxJST) {
   __extends(BorderedPinnedViewport, _super);
   function BorderedPinnedViewport(id, closeOnClickOverlay) {
-    _super.call(this, id, JST.witbox_viewport_borderpinned(), 'viewport-bordered-pinned', 'content', true, true, closeOnClickOverlay);
+    _super.call(this, id, WitBoxJST.witbox_viewport_borderpinned(), 'viewport-bordered-pinned', 'content', true, true, closeOnClickOverlay);
   }
   BorderedPinnedViewport.prototype.show = function (callback) {
     _super.prototype.show.call(this);
@@ -99,26 +99,26 @@ var BorderedPinnedViewport = (function (_super) {
     }, 350);
   };
   return BorderedPinnedViewport;
-})(WitBox.Viewport);
+})(WitBox.Viewport, WitBoxJST);
 
-var YTModal = (function (_super) {
+var YTModal = (function (_super, WitBoxJST) {
   __extends(YTModal, _super);
   function YTModal(Root) {
     _super.call(this, Root);
     this.parameters = { yt: '' };
-    this.templateObj = JST.witbox_modal_yt;
+    this.templateObj = WitBoxJST.witbox_modal_yt;
   }
   YTModal.prototype.initTemplate = function () {
     _super.prototype.initTemplate.call(this);
   };
   return YTModal;
-})(WitBox.Modal);
+})(WitBox.Modal, WitBoxJST);
 
-var GaleryViewport = (function (_super) {
+var GaleryViewport = (function (_super, WitBoxJST) {
   __extends(GaleryViewport, _super);
   var pos = 0;
   function GaleryViewport(id, closeOnClickOverlay) {
-    _super.call(this, id, JST.witbox_viewport_galery(), 'viewport-galery', 'content', true, false, closeOnClickOverlay);
+    _super.call(this, id, WitBoxJST.witbox_viewport_galery(), 'viewport-galery', 'content', true, false, closeOnClickOverlay);
     this.parameters = { pages: [] };
   }
   GaleryViewport.prototype.show = function (callback) {
@@ -145,10 +145,10 @@ var GaleryViewport = (function (_super) {
       self.content.empty();
       switch(it.type) {
         case 'img':
-          content = $(JST.witbox_modal_galeryimg(it));
+          content = $(WitBoxJST.witbox_modal_galeryimg(it));
           break;
         case 'yt':
-          content = $(JST.witbox_modal_galeryyt(it));
+          content = $(WitBoxJST.witbox_modal_galeryyt(it));
           break;
       };
       self.content.append(content);
@@ -159,7 +159,7 @@ var GaleryViewport = (function (_super) {
         $(window).trigger('resize');
         window.setTimeout(function() { content.css({ 'opacity': 1 }); }, it.type == 'img' ? 350 : 500);
       })
-    }, 350);    
+    }, 350);
   };
   GaleryViewport.prototype.refresh_pages = function() {
     var self = this;
@@ -191,14 +191,14 @@ var GaleryViewport = (function (_super) {
       if(w > window.innerWidth * 0.2 || h > window.innerHeight * 0.2) {
         if(w / h > window.innerWidth / window.innerHeight) {
           content.css({ 'width': window.innerWidth * 0.7, 'height': h / w * window.innerWidth * 0.7 });
-        } else { 
+        } else {
           content.css({ 'width': w / h * window.innerHeight * 0.7, 'height': window.innerHeight * 0.7 });
         }
       }
-      self.content.css({ 
-        'width': content.width() + 'px', 
-        'height': content.height() + 'px', 
-      });      
+      self.content.css({
+        'width': content.width() + 'px',
+        'height': content.height() + 'px',
+      });
       self.content.parent().css({
         'opacity': 1,
         'left': window.innerWidth / 2 - content.width() / 2 + 'px',
@@ -218,7 +218,7 @@ var GaleryViewport = (function (_super) {
     self.load(0);
   };
   return GaleryViewport;
-})(WitBox.Viewport);
+})(WitBox.Viewport, WitBoxJST);
 
 var CustomModal = (function (_super) {
   __extends(CustomModal, _super);

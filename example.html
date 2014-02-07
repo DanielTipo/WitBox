@@ -18,12 +18,12 @@
 <script>
 $(document).ready(function(){
   
-  var someCallback = function(e, x) { 
-    $('.click-confirm').text(x.params); 
-  };
-  
   $('.click-confirm').click(function() {
-    WitBoxFactory.showConfirm('Some asking dialog', new WitBox.Callback(someCallback, 'success'), new WitBox.Callback(someCallback, 'failure') );
+    WitBoxFactory.showConfirm(
+      'Some asking dialog', 
+      function(){$('.click-confirm').text('success')}, 
+      function(){$('.click-confirm').text('failure')} 
+      );
   });
   
   $('.click-alert').click(function() {
@@ -46,7 +46,8 @@ $(document).ready(function(){
     ]);
   });
   $('.click-custom').click(function() {
-    WitBoxFactory.show($('.some-dom-node'), { 'test': { 'click': new WitBox.Callback(function(e,x){alert(x.params)}, "It's a test") } }, true);
+    // default event: click
+    WitBoxFactory.show($('.some-dom-node'), { 'test': function(e){alert("It's a test")} }, true);
   });
   
 });

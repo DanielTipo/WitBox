@@ -1,33 +1,44 @@
+/**
+ * Source files written by Dániel Adamkó, Eger, Hungary, 2014
+ * GNU GPL v3 license applied to this project
+ * daniel.adamko@gmail.com
+ */
+ 
+if(!jQuery) throw new Error('Dependency: jQuery with version >=1.10');
+
+if(!jQuery.fn.transition) {
+  jQuery.fn.extend({
+    transition: function(css, callback) {
+      this.css(css);
+      if($.isFunction(callback)) {
+        var delay = 0, delays = this.css('transition-duration');
+        if(typeof delays != 'undefined') {
+          delays = delays.split(',');
+          for(var it in delays) {
+            var d_s = delays[it].replace(/[^0-9.]/g, '');
+            var d = delays[it].indexOf('ms') > 0 ? parseInt(d_s) : parseFloat(d_s) * 1000;
+            if(d > delay) delay = d;
+          }
+          if(delay != 0) {
+            window.setTimeout(callback, delay + 50);
+            return this;
+          }
+        } 
+        callback();
+      }
+      return this;
+    }  
+  });
+}
+
 var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+  for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+  function __() { this.constructor = d; }
+  __.prototype = b.prototype;
+  d.prototype = new __();
 };
 
 var WitBox = {
-  KeyValuePair: (function () {
-      function KeyValuePair(name, value) {
-        this.name = name;
-        this.value = value;
-      }
-      return KeyValuePair;
-  })()
-  ,
-  Callback: (function () {
-    function Callback(fnc, params) {
-      var self = this;
-      this.fnc = fnc;
-      this.params = params;
-      this.call = function(event) {
-        event.stopPropagation();
-        event.preventDefault();
-        self.fnc(event, self);
-      }
-    }
-      return Callback;
-  })()
-  ,
   Modal: (function () {
     function Modal(Root) {
       this.root = Root;
@@ -48,12 +59,9 @@ var WitBox = {
      * Sets a callback function for an event inside the modal
      * @param {String} objectName (Class)Name of the object
      * @param {String} eventFor Event name
-     * @param {Callback} callback Callback object
+     * @param {Function} callback Callback function
      */
     Modal.prototype.setCallback = function (objectName, eventFor, callback) {
-      if(typeof objectName != 'string') throw new Error();
-      if(typeof eventFor != 'string') throw new Error();
-      if(typeof this.callbacks[objectName] == 'undefined') throw new Error();
       this.callbacks[objectName][eventFor] = callback;
     };
     Modal.prototype.initTemplate = function () {
@@ -61,10 +69,13 @@ var WitBox = {
     };
     Modal.prototype.initCallbacks = function () {
       for(var it in this.callbacks) {
-        if(typeof this.callbacks[it] == 'undefined') continue;
-        for(var c in this.callbacks[it]) {
-          if(typeof this.callbacks[it][c] == 'undefined') continue;
-          $(this.root).find(it[0]=='#'?it:'.'+it).on(c, this.callbacks[it][c].call);
+        if(typeof this.callbacks[it] == 'function') {
+          $(this.root).find(it[0]=='#'?it:'.'+it).on('click', this.callbacks[it]);
+        } else if(typeof this.callbacks[it] == 'object') {
+          for(var c in this.callbacks[it]) {
+            if(typeof this.callbacks[it][c] != 'function') continue;
+            $(this.root).find(it[0]=='#'?it:'.'+it).on(c, this.callbacks[it][c]);
+          }
         }
       }
     };
@@ -110,14 +121,12 @@ var WitBox = {
         });
       }
     };
-    Viewport.prototype.show = function() {
-      if(this.centered) 
-        $(window).trigger('resize');
+    Viewport.prototype.show = function(/*callback*/) {
+      if(this.centered) $(window).trigger('resize');
     };
-    Viewport.prototype.hide = function() { 
+    Viewport.prototype.hide = function(/*callback*/) { 
       $(window).off('resize');
-      if(this.overlayed) 
-        $('.witbox-overlay').remove();
+      if(this.overlayed) $('.witbox-overlay').remove();
     };
     return Viewport;
   })()
@@ -126,7 +135,7 @@ var WitBox = {
     var modalCounter = 0;
     function Dialog(Viewport, Modal, Callbacks, Parameters, CloseOnClickOverlay) {
       this.viewport = new Viewport("modal-" + (modalCounter++), CloseOnClickOverlay);
-      this.events = { ready: null, open: null, close: null, closed: null };
+      this.events = { open: null, close: null };
       if(Modal) {
         this.modal = new Modal(this.viewport.content);
         this.viewport.modal = this.modal;
@@ -143,41 +152,24 @@ var WitBox = {
             delete Parameters[it];
           };
       }
-      if(Parameters)
-        this.viewport.parameters = Parameters;
+      if(Parameters) this.viewport.parameters = Parameters;
     }
-    Dialog.prototype.readyCallback = function (callback) {
-      this.events.ready = callback;
-    };
     Dialog.prototype.openCallback = function (callback) {
       this.events.open = callback;
     };
     Dialog.prototype.closeCallback = function (callback) {
       this.events.close = callback;
     };
-    Dialog.prototype.closedCallback = function (callback) {
-      this.events.closed = callback;
-    };
     Dialog.prototype.show = function () {
       var self = this;
       if(self.modal) self.modal.init();
-      self.viewport.frame.find('.close').click(function(){ 
-        self.hide();
-      });
-      self.viewport.show(function() {
-        if(self.events.ready)
-          self.events.ready.fnc(self.events.ready.params);
-      });
+      self.viewport.frame.find('.close').click(function(){self.hide();});
+      self.viewport.show(self.events.open);
       return this;
     };
     Dialog.prototype.hide = function () {
       var self = this;
-      if(self.events.close)
-        self.events.close.fnc(self.events.close.params);
-      self.viewport.hide(function() {
-        if(self.events.closed) 
-         self.events.closed.fnc(self.events.closed.params)
-      });
+      self.viewport.hide(self.events.close);
       return this;
     };
     return Dialog;

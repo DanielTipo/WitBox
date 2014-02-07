@@ -1,4 +1,9 @@
-
+/**
+ * Source files written by Dániel Adamkó, Eger, Hungary, 2014
+ * GNU GPL v3 license applied to this project
+ * daniel.adamko@gmail.com
+ */
+ 
 var PinnedBubbleViewport = (function (_super, WitBoxJST) {
   __extends(PinnedBubbleViewport, _super);
   function PinnedBubbleViewport(id) {
@@ -11,17 +16,17 @@ var PinnedBubbleViewport = (function (_super, WitBoxJST) {
       'left': limit(this.parameters.left, this.root.width(), $(window).width()),
       'top': limit(this.parameters.top, this.root.height(), $(window).height())
     });
-    this.frame.css({ opacity: 1 });
-    window.setTimeout(callback, 350);
+    this.frame.transition({ opacity: 1 }, callback);
   };
   PinnedBubbleViewport.prototype.hide = function (callback) {
     _super.prototype.hide.call(this);
     var self = this;
-    this.frame.css({ opacity: 0 });
+    this.frame.transition({ opacity: 0 }, callback);
+    /*
     window.setTimeout(function(){
       self.root.remove();
-      if(callback) callback();
-    }, 350);
+      if(callback && typeof callback == 'function') callback();
+    }, 350);*/
   };
   var limit = function(x, a, b) {
     return (b - x > a) ? x : x - a;
@@ -36,17 +41,15 @@ var BorderedViewport = (function (_super, WitBoxJST) {
   }
   BorderedViewport.prototype.show = function (callback) {
     _super.prototype.show.call(this);
-    this.frame.css({ opacity: 1 });
-    window.setTimeout(callback, 350);
+    this.frame.transition({ opacity: 1 }, callback);
   };
   BorderedViewport.prototype.hide = function (callback) {
     _super.prototype.hide.call(this);
     var self = this;
-    this.frame.css({ opacity: 0 });
-    window.setTimeout(function(){
+    this.frame.transition({ opacity: 0 }, function(){
       self.root.remove();
-      if(callback) callback();
-    }, 350);
+      if($.isFunction(callback)) callback();
+    });
   };
   return BorderedViewport;
 })(WitBox.Viewport, WitBoxJST);
@@ -86,17 +89,15 @@ var BorderedPinnedViewport = (function (_super, WitBoxJST) {
   }
   BorderedPinnedViewport.prototype.show = function (callback) {
     _super.prototype.show.call(this);
-    this.frame.css({ opacity: 1 });
-    window.setTimeout(callback, 350);
+    this.frame.transition({ opacity: 1 }, callback);
   };
   BorderedPinnedViewport.prototype.hide = function (callback) {
     _super.prototype.hide.call(this);
     var self = this;
-    this.frame.css({ opacity: 0 });
-    window.setTimeout(function(){
+    this.frame.transition({ opacity: 0 }, function(){
       self.root.remove();
-      if(callback) callback();
-    }, 350);
+      if($.isFunction(callback)) callback();
+    });
   };
   return BorderedPinnedViewport;
 })(WitBox.Viewport, WitBoxJST);
@@ -124,24 +125,21 @@ var GaleryViewport = (function (_super, WitBoxJST) {
   GaleryViewport.prototype.show = function (callback) {
     _super.prototype.show.call(this);
     this.init();
-    this.frame.css({ opacity: 1 });
-    window.setTimeout(callback, 350);
+    this.frame.transition({ opacity: 1 }, callback);
   };
   GaleryViewport.prototype.hide = function (callback) {
     _super.prototype.hide.call(this);
     var self = this;
-    this.frame.css({ opacity: 0 });
-    window.setTimeout(function(){
+    this.frame.transition({ opacity: 0 }, function(){
       self.root.remove();
-      if(callback) callback();
-    }, 350);
+      if($.isFunction(callback)) callback();
+    });
   };
   GaleryViewport.prototype.load = function(p) {
     var self = this;
     var content = null;
     var it = self.parameters.pages[p];
-    self.content.children().css({ 'opacity': 0 });
-    window.setTimeout(function() {
+    self.content.children().transition({ 'opacity': 0 }, function() {
       self.content.empty();
       switch(it.type) {
         case 'img':
@@ -152,14 +150,13 @@ var GaleryViewport = (function (_super, WitBoxJST) {
           break;
       };
       self.content.append(content);
-      content.css({ 'opacity': 0 });
       content.load(function() {
         $.data(content[0], 'width', content.width());
         $.data(content[0], 'height', content.height());
         $(window).trigger('resize');
-        window.setTimeout(function() { content.css({ 'opacity': 1 }); }, it.type == 'img' ? 350 : 500);
+        content.delay(it.type=='img'?350:500).css({ 'opacity': 1 });
       })
-    }, 350);
+    });
   };
   GaleryViewport.prototype.refresh_pages = function() {
     var self = this;

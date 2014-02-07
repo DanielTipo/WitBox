@@ -1,2 +1,6 @@
 #!/bin/bash
-lessc -x ./witbox.less > ../witbox-modals.css
+dir=$1
+if [ -z "$dir" ]; then
+    dir="."
+fi
+lessc -x $dir/witbox.less > $dir/../witbox-modals.css

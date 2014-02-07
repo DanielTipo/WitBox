@@ -87,18 +87,15 @@ var WitBox = {
   })()
   ,
   Viewport: (function () {
-    function Viewport(template, viewportcls, overlayed, centered) {
+    function Viewport(template, overlayed, centered) {
       this.templateObj = template;
-      this.viewportClass = viewportcls;
       this.centered = centered;
       this.overlayed = overlayed;
-      this.parameters = [];
+      this.parameters = {};
     };
     Viewport.prototype.init = function() {
       var self = this;
-      this.frame = $('<div>');
-      this.frame.addClass('witbox-' + this.viewportClass);
-      this.frame.html(this.templateObj(this.parameters));
+      this.frame = $(this.templateObj(this.parameters));
       if(this.overlayed) {
         this.overlay = $('<div>');
         this.overlay.addClass('witbox-overlay');

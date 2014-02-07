@@ -9,8 +9,8 @@
 .witbox-viewport-galery .pages{position:absolute;left:50%;bottom:5px;transform:translateX(-50%);-webkit-transform:translateX(-50%);background:rgba(0,0,0,0.5);border-radius:30px;color:#fff;padding:5px;z-index:2}.witbox-viewport-galery .pages .page{display:inline-block;font-size:25px;padding:2px;margin:3px;border-radius:16px;width:28px;height:28px;background:#fff;color:#222;cursor:pointer;text-align:center;transition:background .3s ease-in-out;-webkit-transition:background .3s ease-in-out}
 .witbox-viewport-galery .pages .checked{background:#e0e000}
 .witbox-viewport-galery .content{position:absolute;width:400px;height:300px;background:#000;overflow:hidden;transition:width .3s,height .3s ease-in-out;-webkit-transition:width .3s,height .3s ease-in-out;-webkit-box-shadow:0 0 0 10px rgba(0,0,0,0.5);-moz-box-shadow:0 0 0 10px rgba(0,0,0,0.5);box-shadow:0 0 0 10px rgba(0,0,0,0.5);z-index:2}.witbox-viewport-galery .content img,.witbox-viewport-galery .content iframe{opacity:0;transition:opacity .3s ease-in-out;-webkit-transition:opacity .3s ease-in-out}
-.witbox-viewport-galery .media{position:absolute;opacity:0;transition:left .3s,top .3s ease-in-out;-webkit-transition:left .3s,top .3s ease-in-out;z-index:1}
+.witbox-viewport-galery .witbox-modal-galery{position:absolute;opacity:0;transition:left .3s,top .3s ease-in-out;-webkit-transition:left .3s,top .3s ease-in-out;z-index:1}
 .witbox-viewport-galery .close{position:fixed;width:36px;height:36px;left:50%;margin-left:-18px;margin-top:-46px;background:rgba(0,0,0,0.5) url(img/wbclose.png) 3px 3px no-repeat;border-radius:25px 25px 0px 0px;cursor:pointer;z-index:1}
-.witbox-modal-confirm .text{padding:10px;background:#fff;font-size:14pt}
-.witbox-modal-confirm .buttons{padding:10px;background:#e4e4e4;text-align:right;-webkit-box-shadow:inset 0 17px 7px -14px rgba(50,50,50,0.5);-moz-box-shadow:inset 0 17px 7px -14px rgba(50,50,50,0.5);box-shadow:inset 0 17px 7px -14px rgba(50,50,50,0.5)}
+.witbox-modal-messagebox .text{padding:10px;background:#fff;font-size:14pt}
+.witbox-modal-messagebox .buttons{padding:10px;background:#e4e4e4;text-align:right;-webkit-box-shadow:inset 0 17px 7px -14px rgba(50,50,50,0.5);-moz-box-shadow:inset 0 17px 7px -14px rgba(50,50,50,0.5);box-shadow:inset 0 17px 7px -14px rgba(50,50,50,0.5)}
 .some-dom-node{font-size:16px;text-align:center;background:white}

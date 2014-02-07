@@ -1,0 +1,3 @@
+#!/bin/bash
+./tpl/compile tpl
+./less/compile less

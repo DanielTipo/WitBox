@@ -7,7 +7,7 @@
 var PinnedBubbleViewport = (function (_super, WitBoxJST) {
   __extends(PinnedBubbleViewport, _super);
   function PinnedBubbleViewport() {
-    _super.call(this, WitBoxJST.witbox_viewport_pinned, 'viewport-pinned', false);
+    _super.call(this, WitBoxJST.witbox_viewport_pinned);
     this.parameters = { left: 0, top: 0 };
   }
   PinnedBubbleViewport.prototype.show = function (callback) {
@@ -32,7 +32,7 @@ var PinnedBubbleViewport = (function (_super, WitBoxJST) {
 var BorderedViewport = (function (_super, WitBoxJST) {
   __extends(BorderedViewport, _super);
   function BorderedViewport() {
-    _super.call(this, WitBoxJST.witbox_viewport_bordered, 'viewport-bordered', true, true);
+    _super.call(this, WitBoxJST.witbox_viewport_bordered, true, true);
   }
   BorderedViewport.prototype.show = function (callback) {
     _super.prototype.show.call(this);
@@ -76,7 +76,7 @@ var AlertModal = (function (_super, WitBoxJST) {
 var BorderedPinnedViewport = (function (_super, WitBoxJST) {
   __extends(BorderedPinnedViewport, _super);
   function BorderedPinnedViewport() {
-    _super.call(this, WitBoxJST.witbox_viewport_borderpinned, 'viewport-bordered-pinned', true, true);
+    _super.call(this, WitBoxJST.witbox_viewport_borderpinned, true, true);
   }
   BorderedPinnedViewport.prototype.show = function (callback) {
     _super.prototype.show.call(this);
@@ -107,7 +107,7 @@ var GaleryViewport = (function (_super, WitBoxJST) {
   __extends(GaleryViewport, _super);
   var pos = 0;
   function GaleryViewport() {
-    _super.call(this, WitBoxJST.witbox_viewport_galery, 'viewport-galery', true, false);
+    _super.call(this, WitBoxJST.witbox_viewport_galery, true);
     this.parameters = { pages: [] };
   }
   GaleryViewport.prototype.show = function (callback) {

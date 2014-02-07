@@ -1,8 +1,11 @@
+@import "mixins";
+@import "colors";
+
 .witbox-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: @semitransparent;
   width: 100%;
   height: 100%;
   z-index: 5000;
@@ -11,8 +14,7 @@
 .witbox-viewport-pinned {
   position: fixed;
   opacity: 0;
- 	-webkit-transition: opacity .3s ease-in-out;
-  transition:         opacity .3s ease-in-out;
+  .transition(@opatrans);
   z-index: 5001;
   .close {
     position: absolute;
@@ -21,19 +23,19 @@
     top: 0px;
     left: 50%;
     margin-left: -19px;
-    background:#ffffff url(img/wbclose.png) 3px 3px no-repeat;
+    background: @close1;
     border-radius:25px 25px 0px 0px;
     z-index: 2;
-    box-shadow:0px -3px 2px rgba(0,0,0,.5);
+    .box-shadow(0px -3px 2px @semitransparent);
     cursor: pointer;
     z-index: 2;
   }
   .content {
     display:block;
-    box-shadow: 0px 0px 220px 80px rgba(0,0,0,.2), 0px 0px 60px 5px rgba(0,0,0,.3), 0px 1px 10px rgba(0,0,0,1.9);
+    .box-shadow(@pinnedshadow);
     border-radius:5px;
-    background:rgba(255,255,255,1);
-    margin-top:36px;
+    background: @white;
+    margin-top: 36px;
     z-index: 1;
   }
 }
@@ -43,11 +45,8 @@
   opacity: 0;
   min-width: 100px;
   max-width: 50%;
-  -webkit-box-shadow: 0px 0px 0px 10px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow:    0px 0px 0px 10px rgba(0, 0, 0, 0.5);
-  box-shadow:         0px 0px 0px 10px rgba(0, 0, 0, 0.5);
- 	-webkit-transition: opacity .3s ease-in-out;
-  transition:         opacity .3s ease-in-out; 
+  .box-shadow(@modalshadow);
+  .transition(@opatrans);
   z-index: 5001;
 }
 
@@ -55,14 +54,11 @@
   position: fixed;
   opacity: 0;
   background: transparent;
- 	-webkit-transition: opacity .3s ease-in-out;
-  transition:         opacity .3s ease-in-out;
+  .transition(@opatrans);
   z-index: 5001;
   .content {
-    background: #000;
-    -webkit-box-shadow: 0px 0px 0px 10px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow:    0px 0px 0px 10px rgba(0, 0, 0, 0.5);
-    box-shadow:         0px 0px 0px 10px rgba(0, 0, 0, 0.5);
+    background: @black;
+    .box-shadow(@modalshadow);
   }
   .close {
     position: absolute;
@@ -71,15 +67,14 @@
     left: 50%;
     margin-left: -18px;
     margin-top: -46px;
-    background: rgba(0, 0, 0, 0.5) url(img/wbclose.png) 3px 3px no-repeat;
+    background: @close2;
     border-radius:25px 25px 0px 0px;
     cursor: pointer;
   }
 }
 
 .witbox-viewport-galery {
- 	-webkit-transition: opacity .3s ease-in-out;
-  transition:         opacity .3s ease-in-out;
+ 	.transition(@opatrans);
   .next-button {
     position: absolute;
     right: 0%;
@@ -87,9 +82,9 @@
     width: 32px;
     height: 32px;
     margin-top: -16px;
-    background: rgba(0, 0, 0, 0.5) url(img/r_arrow_20.png) 12px center no-repeat;
-    color: #fff;
-    border-radius:16px 0px 0px 16px;
+    background: @rightarrow;
+    color: @white;
+    border-radius: 16px 0px 0px 16px;
     cursor: pointer;
     z-index: 3;
   }
@@ -100,9 +95,9 @@
     width: 32px;
     height: 32px;
     margin-top: -16px;
-    background: rgba(0, 0, 0, 0.5) url(img/l_arrow_20.png) 6px center no-repeat;
-    color: #fff;
-    border-radius:0px 16px 16px 0px;
+    background: @leftarrow;
+    color: @white;
+    border-radius: 0px 16px 16px 0px;
     cursor: pointer;
     z-index: 3;
   }
@@ -110,11 +105,10 @@
     position: absolute;
     left: 50%;
     bottom: 5px;
-    transform:          translateX(-50%);
-    -webkit-transform:  translateX(-50%);
-    background: rgba(0, 0, 0, 0.5);
+    .transform(translateX(-50%));
+    background: @semitransparent;
     border-radius: 30px;
-    color: #fff;
+    color: @white;
     padding: 5px;
     z-index: 2;
     .page {
@@ -125,40 +119,34 @@
       border-radius: 16px;
       width: 28px;
       height: 28px;
-      background: #fff;
-      color: #222;
+      background: @white;
+      color: @24gray;
       cursor: pointer;
       text-align: center;
-      transition:         background .3s ease-in-out; 
-      -webkit-transition: background .3s ease-in-out;
+      .transition(background .3s ease-in-out);
     }
     .checked {
-      background: #e0e000;
+      background: @darkred;
     }
   }
   .content {
     position: absolute;
     width: 400px;
     height: 300px;
-    background: #000;
+    background: @black;
     overflow: hidden;
-    transition:         width .3s, height .3s ease-in-out; 
-    -webkit-transition: width .3s, height .3s ease-in-out; 
-    -webkit-box-shadow: 0px 0px 0px 10px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow:    0px 0px 0px 10px rgba(0, 0, 0, 0.5);
-    box-shadow:         0px 0px 0px 10px rgba(0, 0, 0, 0.5);
+    .transition(@sizetrans);
+    .box-shadow(@modalshadow);
     z-index: 2;
     img, iframe {
       opacity: 0;
-      transition:         opacity .3s ease-in-out; 
-      -webkit-transition: opacity .3s ease-in-out;
+      .transition(@opatrans);
     }
   }
   .witbox-modal-galery {
     position: absolute;
     opacity: 0;
-    transition:         left .3s, top .3s ease-in-out; 
-    -webkit-transition: left .3s, top .3s ease-in-out; 
+    .transition(@postrans);
     z-index: 1;
   }
   .close {
@@ -168,8 +156,8 @@
     left: 50%;
     margin-left: -18px;
     margin-top: -46px;
-    background: rgba(0, 0, 0, 0.5) url(img/wbclose.png) 3px 3px no-repeat;
-    border-radius:25px 25px 0px 0px;
+    background: @close2;
+    border-radius: 25px 25px 0px 0px;
     cursor: pointer;
     z-index: 1;
   }
@@ -178,21 +166,19 @@
 .witbox-modal-messagebox {
   .text {
     padding: 10px;
-    background: #fff;
+    background: @white;
     font-size: 14pt;
   }
   .buttons {
     padding: 10px;
-    background: #e4e4e4;
+    background: @E5gray;
     text-align: right;
-    -webkit-box-shadow: inset 0px 17px 7px -14px rgba(50, 50, 50, 0.5);
-    -moz-box-shadow:    inset 0px 17px 7px -14px rgba(50, 50, 50, 0.5);
-    box-shadow:         inset 0px 17px 7px -14px rgba(50, 50, 50, 0.5);
+    .box-shadow(@msgmodalshadow);
   }
 }
 
 .some-dom-node {
   font-size: 16px;
   text-align: center;
-  background: white;
+  background: @white;
 }

@@ -1,2 +1,2 @@
 #!/bin/bash
-lessc -x witbox.less > ../style.css
+lessc -x ./witbox.less > ../witbox-modals.css

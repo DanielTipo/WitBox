@@ -40,8 +40,8 @@ var __extends = this.__extends || function (d, b) {
 
 var WitBox = {
   Modal: (function () {
-    function Modal(Root) {
-      this.root = Root;
+    function Modal(root) {
+      this.root = root;
       this.parameters = {};
       this.callbacks = {};
       this.templateObj = null;
@@ -65,7 +65,7 @@ var WitBox = {
       this.callbacks[objectName][eventFor] = callback;
     };
     Modal.prototype.initTemplate = function () {
-      $(this.root).html(this.templateObj(this.parameters));
+      this.root.html(this.templateObj(this.parameters));
     };
     Modal.prototype.initCallbacks = function () {
       for(var it in this.callbacks) {
@@ -87,72 +87,82 @@ var WitBox = {
   })()
   ,
   Viewport: (function () {
-    function Viewport(id, html, viewportcls, contentcls, overlayed, centered, overlayexit) {
-      var self = this;
+    function Viewport(template, viewportcls, overlayed, centered) {
+      this.templateObj = template;
+      this.viewportClass = viewportcls;
       this.centered = centered;
       this.overlayed = overlayed;
-      this.contentClass = contentcls;
+      this.parameters = [];
+    };
+    Viewport.prototype.init = function() {
+      var self = this;
       this.frame = $('<div>');
-      this.frame.attr('id', id);
-      if(overlayed) {
+      this.frame.addClass('witbox-' + this.viewportClass);
+      this.frame.html(this.templateObj(this.parameters));
+      if(this.overlayed) {
         this.overlay = $('<div>');
         this.overlay.addClass('witbox-overlay');
         this.overlay.appendTo($(document.body));
-        if(overlayexit) {
-          this.overlay.click(function(e){
-            self.hide();
-          });
-        }
-      }
-      this.frame.addClass((centered?'witbox-centered ':'') + 'witbox-' + viewportcls);
-      this.frame.html(html);
-      this.content = this.frame.find('.' + contentcls);
-      this.frame.appendTo($(document.body));
-      this.root = this.frame;
+        this.frame.appendTo(this.overlay);
+        this.root = this.overlay;
+      } else {
+        this.frame.appendTo($(document.body));
+        this.root = this.frame;
+      }     
+      this.content = this.frame.find('.content');
       this.closeButton = this.frame.find('.close');
-      this.parameters = [];
-      if(centered) {
-        var self = this;
-        $(window).resize(function() {
-          self.frame.css({ 
-            'left': window.innerWidth / 2 - self.frame.width() / 2 + 'px',
-            'top': window.innerHeight / 2 - self.frame.height() / 2 + 'px'
-          });
-        });
+      if(this.centered) {
+        $(window).resize(function(){resize_callback(self)});
       }
     };
     Viewport.prototype.show = function(/*callback*/) {
       if(this.centered) $(window).trigger('resize');
     };
     Viewport.prototype.hide = function(/*callback*/) { 
-      $(window).off('resize');
-      if(this.overlayed) $('.witbox-overlay').remove();
+      var self = this;
+      $(window).off('resize', function(){resize_callback(self)});
     };
+    Viewport.prototype.setParamaters = function (parameterName, parameterValue) {
+      if(typeof parameterName != 'string') throw new Error();
+      this.parameters[parameterName] = parameterValue;
+    };
+    var resize_callback = function(source) {
+      source.frame.css({ 
+        'left': window.innerWidth / 2 - source.frame.width() / 2 + 'px',
+        'top': window.innerHeight / 2 - source.frame.height() / 2 + 'px'
+      });
+    }
     return Viewport;
   })()
   ,
   Dialog: (function () {
-    var modalCounter = 0;
-    function Dialog(Viewport, Modal, Callbacks, Parameters, CloseOnClickOverlay) {
-      this.viewport = new Viewport("modal-" + (modalCounter++), CloseOnClickOverlay);
+    function Dialog(viewport, modal, callbacks, parameters, closeOnClickOverlay) {
+      var self = this;
+      this.viewport = new viewport();
       this.events = { open: null, close: null };
-      if(Modal) {
-        this.modal = new Modal(this.viewport.content);
+      if(modal) {
+        this.modal = new modal();
         this.viewport.modal = this.modal;
-        if(Callbacks)
+        if(callbacks)
           if(this.modal.callbacks == 'custom')  
-            this.modal.callbacks = Callbacks;
+            this.modal.callbacks = callbacks;
           else
             for(var it in this.modal.callbacks) {
-              this.modal.callbacks[it] = Callbacks[it] ? Callbacks[it] : [];
+              this.modal.callbacks[it] = callbacks[it] ? callbacks[it] : [];
             };
-        if(Parameters)
+        if(parameters)
           for(var it in this.modal.parameters) {
-            this.modal.parameters[it] = Parameters[it] ? Parameters[it] : [];
-            delete Parameters[it];
+            this.modal.parameters[it] = parameters[it] ? parameters[it] : [];
+            delete parameters[it];
           };
       }
-      if(Parameters) this.viewport.parameters = Parameters;
+      if(parameters) this.viewport.parameters = parameters;
+      this.viewport.init();
+      if(modal) this.modal.root = this.viewport.content;
+      if(closeOnClickOverlay) 
+        this.viewport.overlay.click(function(e){
+          if(e.target == this) self.hide();
+        });
     }
     Dialog.prototype.openCallback = function (callback) {
       this.events.open = callback;
@@ -162,14 +172,17 @@ var WitBox = {
     };
     Dialog.prototype.show = function () {
       var self = this;
-      if(self.modal) self.modal.init();
-      self.viewport.frame.find('.close').click(function(){self.hide();});
-      self.viewport.show(self.events.open);
+      if(this.modal) this.modal.init();
+      this.viewport.show(this.events.open);
+      this.viewport.frame.find('.close').click(function(){self.hide();});
       return this;
     };
     Dialog.prototype.hide = function () {
       var self = this;
-      self.viewport.hide(self.events.close);
+      this.viewport.hide(function(){
+        if($.isFunction(self.events.close)) self.events.close();
+        self.viewport.root.remove();
+      });
       return this;
     };
     return Dialog;

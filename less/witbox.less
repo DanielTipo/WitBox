@@ -1,0 +1,182 @@
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}
+
+.lightbox-centered {
+  position: absolute;
+  transition:         opacity .3s, left .3s, top .3s ease-in-out; 
+ 	-webkit-transition: opacity .3s, left .3s, top .3s ease-in-out;
+}
+
+.lightbox-clearance {
+  clear: both;
+}
+
+.lightbox-shadow {
+  margin: 5px;  
+  background: rgba(0, 0, 0, 0.2);
+  color: @black;
+}
+
+.lightbox-viewport-pinned {
+  position: fixed;
+  opacity: 0;
+  transition:         opacity .3s ease-in-out; 
+ 	-webkit-transition: opacity .3s ease-in-out;
+  .close {
+    position: absolute;
+    width:38px;
+    height:38px;
+    top: 0px;
+    left: 50%;
+    margin-left: -19px;
+    background: @white url(img/wbclose.png) 3px 3px no-repeat;
+    border-radius:25px 25px 0px 0px;
+    z-index: 2;
+    box-shadow:0px -3px 2px rgba(0,0,0,.5);
+    cursor: pointer;
+  }
+  .content {
+    display:block;
+    box-shadow: 0px 0px 220px 80px rgba(0,0,0,.2), 0px 0px 60px 5px rgba(0,0,0,.3), 0px 1px 10px rgba(0,0,0,1.9);
+    border-radius:5px;
+    background:rgba(255,255,255,1);
+    margin-top:36px;
+  }
+}
+
+.lightbox-viewport-bordered {
+  opacity: 0;
+  min-width: 100px;
+  max-width: 50%;
+  -webkit-box-shadow: 0px 0px 0px 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow:    0px 0px 0px 10px rgba(0, 0, 0, 0.5);
+  box-shadow:         0px 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-modal-confirm {
+  .lightbox-modal-confirm-text {
+    padding: 10px;
+    background: @white;
+    font-size: 14pt;
+  }
+  .lightbox-modal-confirm-buttons {
+    padding: 10px;
+    background: @E5gray;
+    text-align: right;
+    -webkit-box-shadow: inset 0px 17px 7px -14px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow:    inset 0px 17px 7px -14px rgba(50, 50, 50, 0.5);
+    box-shadow:         inset 0px 17px 7px -14px rgba(50, 50, 50, 0.5);
+  }
+}
+
+.lightbox-viewport-bordered-pinned {
+  opacity: 0;
+  background: transparent;
+  .content {
+    background: @black;
+    -webkit-box-shadow: 0px 0px 0px 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:    0px 0px 0px 10px rgba(0, 0, 0, 0.5);
+    box-shadow:         0px 0px 0px 10px rgba(0, 0, 0, 0.5);
+  }
+  .close {
+    position: absolute;
+    width:36px;
+    height:36px;
+    top: -46px;
+    left: 50%;
+    margin-left: -18px;
+    background: rgba(0, 0, 0, 0.5) url(img/wbclose.png) 3px 3px no-repeat;
+    border-radius:25px 25px 0px 0px;
+    cursor: pointer;
+  }
+}
+
+.lightbox-viewport-galery {
+  .next-button {
+    position: absolute;
+    right: 0%;
+    top: 50%;
+    width: 32px;
+    height: 32px;
+    margin-top: -16px;
+    background: rgba(0, 0, 0, 0.5) url(img/r_arrow_20.png) 12px center no-repeat;
+    color: @white;
+    border-radius:16px 0px 0px 16px;
+    cursor: pointer;
+  }
+  .prev-button {
+    position: absolute;
+    left: 0%;
+    top: 50%;
+    width: 32px;
+    height: 32px;
+    margin-top: -16px;
+    background: rgba(0, 0, 0, 0.5) url(img/l_arrow_20.png) 6px center no-repeat;
+    color: @white;
+    border-radius:0px 16px 16px 0px;
+    cursor: pointer;
+  }
+  .pages {
+    position: absolute;
+    left: 50%;
+    bottom: 5px;
+    transform:          translate(-50%, 0);
+    -webkit-transform:  translate(-50%, 0);
+    -ms-transform:      translate(-50%, 0);
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 30px;
+    color: @white;
+    padding: 5px;
+    .page {
+      display: inline-block;
+      font-size: 25px;
+      padding: 2px;
+      margin: 3px;
+      border-radius: 16px;
+      width: 28px;
+      height: 28px;
+      background: @white;
+      color: @24gray;
+      cursor: pointer;
+      text-align: center;
+      transition:         background .3s ease-in-out; 
+      -webkit-transition: background .3s ease-in-out;
+    }
+    .checked {
+      background: @darkred;
+    }
+  }
+  .content {
+    width: 400px;
+    height: 300px;
+    background: @black;
+    overflow: hidden;
+    transition:         width .3s, height .3s ease-in-out; 
+    -webkit-transition: width .3s, height .3s ease-in-out; 
+    -webkit-box-shadow: 0px 0px 0px 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow:    0px 0px 0px 10px rgba(0, 0, 0, 0.5);
+    box-shadow:         0px 0px 0px 10px rgba(0, 0, 0, 0.5);
+    img, iframe {
+      opacity: 0;
+      transition:         opacity .3s ease-in-out; 
+      -webkit-transition: opacity .3s ease-in-out;
+    }
+  }
+  .close {
+    position: absolute;
+    width:36px;
+    height:36px;
+    left: 50%;
+    margin-left: -18px;
+    margin-top: -46px;
+    background: rgba(0, 0, 0, 0.5) url(img/wbclose.png) 3px 3px no-repeat;
+    border-radius:25px 25px 0px 0px;
+    cursor: pointer;
+  }
+}

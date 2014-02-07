@@ -1,0 +1,2 @@
+#!/bin/bash
+dot-packer -d ./ -o ../templates.js

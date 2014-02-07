@@ -3,5 +3,5 @@ dir=$1
 if [ -z "$dir" ]; then
     dir="."
 fi
-dot-packer --dontcompress -d $dir/ -o $dir/templates.js
-sed 's/JST/WitBoxJST/g' $dir/templates.js > $dir/../templates.js
+dot-packer --dontcompress -d $dir/ -o $dir/templates.js --ns WitBoxJST
+#sed 's/JST/WitBoxJST/g' $dir/templates.js > $dir/../templates.js

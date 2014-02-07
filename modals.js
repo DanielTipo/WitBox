@@ -21,12 +21,10 @@ var PinnedBubbleViewport = (function (_super, WitBoxJST) {
   PinnedBubbleViewport.prototype.hide = function (callback) {
     _super.prototype.hide.call(this);
     var self = this;
-    this.frame.transition({ opacity: 0 }, callback);
-    /*
-    window.setTimeout(function(){
+    this.frame.transition({ opacity: 0 }, function(){
       self.root.remove();
-      if(callback && typeof callback == 'function') callback();
-    }, 350);*/
+      if($.isFunction(callback)) callback();
+    });
   };
   var limit = function(x, a, b) {
     return (b - x > a) ? x : x - a;

@@ -47,7 +47,7 @@ $(document).ready(function(){
   });
   $('.click-custom').click(function() {
     // default event: click
-    WitBoxFactory.show($('.some-dom-node'), { 'test': function(e){alert("It's a test")} }, true);
+    WitBoxFactory.show($('.some-dom-node'), { '.test': function(e){alert("It's a test")} }, true);
   });
   
 });

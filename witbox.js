@@ -40,8 +40,8 @@ var __extends = this.__extends || function (d, b) {
 
 var WitBox = {
   Modal: (function () {
-    function Modal(root) {
-      this.root = root;
+    function Modal() {
+      this.root = null;
       this.parameters = {};
       this.callbacks = {};
       this.templateObj = null;
@@ -70,11 +70,11 @@ var WitBox = {
     Modal.prototype.initCallbacks = function () {
       for(var it in this.callbacks) {
         if(typeof this.callbacks[it] == 'function') {
-          $(this.root).find(it[0]=='#'?it:'.'+it).on('click', this.callbacks[it]);
+          $(this.root).find(it).on('click', this.callbacks[it]);
         } else if(typeof this.callbacks[it] == 'object') {
           for(var c in this.callbacks[it]) {
             if(typeof this.callbacks[it][c] != 'function') continue;
-            $(this.root).find(it[0]=='#'?it:'.'+it).on(c, this.callbacks[it][c]);
+            $(this.root).find(it).on(c, this.callbacks[it][c]);
           }
         }
       }
@@ -106,8 +106,8 @@ var WitBox = {
         this.frame.appendTo($(document.body));
         this.root = this.frame;
       }     
-      this.content = this.frame.find('.content');
-      this.closeButton = this.frame.find('.close');
+      this.content = this.frame.find('.witbox-content');
+      this.closeButton = this.frame.find('.witbox-close');
       if(this.centered) {
         $(window).resize(function(){resize_callback(self)});
       }
@@ -133,30 +133,31 @@ var WitBox = {
   })()
   ,
   Dialog: (function () {
-    function Dialog(viewport, modal, callbacks, parameters, closeOnClickOverlay) {
+    function Dialog(setup) {
+      //viewport, modal, callbacks, parameters, closeOnOverlayClick
       var self = this;
-      this.viewport = new viewport();
+      this.viewport = new setup.viewport();
       this.events = { open: null, close: null };
-      if(modal) {
-        this.modal = new modal();
+      if(setup.modal) {
+        this.modal = new setup.modal();
         this.viewport.modal = this.modal;
-        if(callbacks)
+        if(setup.callbacks)
           if(this.modal.callbacks == 'custom')  
-            this.modal.callbacks = callbacks;
+            this.modal.callbacks = setup.callbacks;
           else
             for(var it in this.modal.callbacks) {
-              this.modal.callbacks[it] = callbacks[it] ? callbacks[it] : [];
+              this.modal.callbacks[it] = setup.callbacks[it] ? setup.callbacks[it] : [];
             };
-        if(parameters)
+        if(setup.parameters)
           for(var it in this.modal.parameters) {
-            this.modal.parameters[it] = parameters[it] ? parameters[it] : [];
-            delete parameters[it];
+            this.modal.parameters[it] = setup.parameters[it] ? setup.parameters[it] : [];
+            delete setup.parameters[it];
           };
       }
-      if(parameters) this.viewport.parameters = parameters;
+      if(setup.parameters) this.viewport.parameters = setup.parameters;
       this.viewport.init();
-      if(modal) this.modal.root = this.viewport.content;
-      if(closeOnClickOverlay) 
+      if(setup.modal) this.modal.root = this.viewport.content;
+      if(setup.closeOnOverlayClick) 
         this.viewport.overlay.click(function(e){
           if(e.target == this) self.hide();
         });
@@ -171,7 +172,7 @@ var WitBox = {
       var self = this;
       if(this.modal) this.modal.init();
       this.viewport.show(this.events.open);
-      this.viewport.frame.find('.close').click(function(){self.hide();});
+      this.viewport.frame.find('.witbox-close').click(function(){self.hide();});
       return this;
     };
     Dialog.prototype.hide = function () {

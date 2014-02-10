@@ -16,7 +16,7 @@
   opacity: 0;
   .transition(@opatrans);
   z-index: 5001;
-  .close {
+  .witbox-close {
     position: absolute;
     width:38px;
     height:38px;
@@ -30,7 +30,7 @@
     cursor: pointer;
     z-index: 2;
   }
-  .content {
+  .witbox-content {
     display:block;
     .box-shadow(@pinnedshadow);
     border-radius:5px;
@@ -56,11 +56,11 @@
   background: transparent;
   .transition(@opatrans);
   z-index: 5001;
-  .content {
+  .witbox-content {
     background: @black;
     .box-shadow(@modalshadow);
   }
-  .close {
+  .witbox-close {
     position: absolute;
     width:36px;
     height:36px;
@@ -75,7 +75,7 @@
 
 .witbox-viewport-galery {
  	.transition(@opatrans);
-  .next-button {
+  .witbox-next-button {
     position: absolute;
     right: 0%;
     top: 50%;
@@ -88,7 +88,7 @@
     cursor: pointer;
     z-index: 3;
   }
-  .prev-button {
+  .witbox-prev-button {
     position: absolute;
     left: 0%;
     top: 50%;
@@ -101,7 +101,7 @@
     cursor: pointer;
     z-index: 3;
   }
-  .pages {
+  .witbox-pages {
     position: absolute;
     left: 50%;
     bottom: 5px;
@@ -111,7 +111,7 @@
     color: @white;
     padding: 5px;
     z-index: 2;
-    .page {
+    .witbox-page {
       display: inline-block;
       font-size: 25px;
       padding: 2px;
@@ -125,11 +125,11 @@
       text-align: center;
       .transition(background .3s ease-in-out);
     }
-    .checked {
+    .witbox-page-checked {
       background: @darkred;
     }
   }
-  .content {
+  .witbox-content {
     position: absolute;
     width: 400px;
     height: 300px;
@@ -149,7 +149,7 @@
     .transition(@postrans);
     z-index: 1;
   }
-  .close {
+  .witbox-close {
     position: fixed;
     width:36px;
     height:36px;
@@ -164,12 +164,12 @@
 }
 
 .witbox-modal-messagebox {
-  .text {
+  .witbox-text {
     padding: 10px;
     background: @white;
     font-size: 14pt;
   }
-  .buttons {
+  .witbox-buttons {
     padding: 10px;
     background: @E5gray;
     text-align: right;

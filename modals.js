@@ -50,7 +50,7 @@ var ConfirmModal = (function (_super, WitBoxJST) {
   function ConfirmModal() {
     _super.call(this);
     this.parameters = { text: '' };
-    this.callbacks = { 'ok': [], 'cancel': [] };
+    this.callbacks = { '.witbox-ok': [], '.witbox-cancel': [] };
     this.templateObj = WitBoxJST.witbox_modal_confirm;
   }
   ConfirmModal.prototype.init = function() {
@@ -64,7 +64,7 @@ var AlertModal = (function (_super, WitBoxJST) {
   function AlertModal() {
     _super.call(this);
     this.parameters = { text: '' };
-    this.callbacks = { 'ok': [] };
+    this.callbacks = { '.witbox-ok': [] };
     this.templateObj = WitBoxJST.witbox_modal_alert;
   }
   AlertModal.prototype.init = function() {
@@ -143,10 +143,10 @@ var GaleryViewport = (function (_super, WitBoxJST) {
   };
   GaleryViewport.prototype.refresh_pages = function() {
     var self = this;
-    self.root.find('.page').removeClass('checked');
-    $.each(self.root.find('.page'), function(i, v) {
+    self.root.find('.witbox-page').removeClass('witbox-page-checked');
+    $.each(self.root.find('.witbox-page'), function(i, v) {
       if($(v).data('id') == pos) {
-        $(v).addClass('checked');
+        $(v).addClass('witbox-page-checked');
         return;
       }
     });
@@ -155,12 +155,12 @@ var GaleryViewport = (function (_super, WitBoxJST) {
     _super.prototype.init.call(this);
     var self = this;
     pos = 0;
-    self.root.find('.prev-button').click(function(){
+    self.root.find('.witbox-prev-button').click(function(){
       if(--pos < 0) pos = self.parameters.pages.length - 1;
       self.refresh_pages();
       self.load(pos);
     });
-    self.root.find('.next-button').click(function(){
+    self.root.find('.witbox-next-button').click(function(){
       if(++pos > self.parameters.pages.length - 1) pos = 0;
       self.refresh_pages();
       self.load(pos);
@@ -188,11 +188,11 @@ var GaleryViewport = (function (_super, WitBoxJST) {
     });
     $.each(self.parameters.pages, function(ix, it) {
       if(it.type == 'img') (new Image).src = it.url;
-      self.root.find('.pages').append($('<span class="page'+(ix == 0 ? ' checked"' : '"')+' data-id="'+ix+'">'+(ix+1)+'</span>'));
+      self.root.find('.witbox-pages').append($('<span class="witbox-page'+(ix == 0 ? ' witbox-page-checked"' : '"')+' data-id="'+ix+'">'+(ix+1)+'</span>'));
     });
-    self.root.find('.page').click(function() {
-      self.root.find('.page').removeClass('checked');
-      $(this).addClass('checked');
+    self.root.find('.witbox-page').click(function() {
+      self.root.find('.witbox-page').removeClass('witbox-page-checked');
+      $(this).addClass('witbox-page-checked');
       pos = $(this).data('id');
       self.load(pos);
     });
@@ -221,22 +221,43 @@ var CustomModal = (function (_super) {
 })(WitBox.Modal);
 
 WitBoxFactory.showConfirm = function(text, okCallback, cancelCallback) {
-  new WitBox.Dialog(BorderedViewport, ConfirmModal, { 'ok': okCallback, 'cancel': cancelCallback }, { 'text': text }).show();
+  new WitBox.Dialog({
+    viewport: BorderedViewport, 
+    modal: ConfirmModal, 
+    callbacks: { '.witbox-ok': okCallback, '.witbox-cancel': cancelCallback }, 
+    parameters: { 'text': text } }).show();
 };
 
 WitBoxFactory.showAlert = function(text, okCallback) {
-  new WitBox.Dialog(BorderedViewport, AlertModal, { 'ok': okCallback }, { 'text': text }, true).show();
+  new WitBox.Dialog({
+    viewport: BorderedViewport, 
+    modal: AlertModal, 
+    callbacks: { '.witbox-ok': okCallback }, 
+    parameters: { 'text': text }, 
+    closeOnOverlayClick: true }).show();
 };
 
 WitBoxFactory.showYT = function(yt) {
-  new WitBox.Dialog(BorderedPinnedViewport, YTModal, null, { 'yt': yt }, true).show();
+  new WitBox.Dialog({
+    viewport: BorderedPinnedViewport, 
+    modal: YTModal, 
+    parameters: { 'yt': yt }, 
+    closeOnOverlayClick: true }).show();
 };
 
 WitBoxFactory.showGalery = function(pages) {
-  new WitBox.Dialog(GaleryViewport, null, null, { 'pages': pages }, true).show();
+  new WitBox.Dialog({
+    viewport: GaleryViewport, 
+    parameters: { 'pages': pages }, 
+    closeOnOverlayClick: true }).show();
 };
 
-WitBoxFactory.show = function(jqobject, callbacks, overlayOnClickExit) {
-  new WitBox.Dialog(BorderedPinnedViewport, CustomModal, callbacks, { 'jqobject': jqobject }, overlayOnClickExit).show();
+WitBoxFactory.show = function(jqobject, callbacks, closeOnOverlayClick) {
+  new WitBox.Dialog({
+    viewport: BorderedPinnedViewport, 
+    modal: CustomModal, 
+    callbacks: callbacks, 
+    parameters: { 'jqobject': jqobject }, 
+    closeOnOverlayClick: closeOnOverlayClick }).show();
 };
 

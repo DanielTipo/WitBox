@@ -3,7 +3,7 @@
  * GNU GPL v3 license applied to this project
  * daniel.adamko@gmail.com
  */
- 
+
 var PinnedBubbleViewport = (function (_super, WitBoxJST) {
   __extends(PinnedBubbleViewport, _super);
   function PinnedBubbleViewport() {
@@ -221,43 +221,48 @@ var CustomModal = (function (_super) {
 })(WitBox.Modal);
 
 WitBoxFactory.showConfirm = function(text, okCallback, cancelCallback) {
-  new WitBox.Dialog({
-    viewport: BorderedViewport, 
-    modal: ConfirmModal, 
-    callbacks: { '.witbox-ok': okCallback, '.witbox-cancel': cancelCallback }, 
+  var d = new WitBox.Dialog({
+    viewport: BorderedViewport,
+    modal: ConfirmModal,
+    callbacks: { '.witbox-ok': okCallback, '.witbox-cancel': cancelCallback },
     parameters: { 'text': text } }).show();
+  return d;
 };
 
 WitBoxFactory.showAlert = function(text, okCallback) {
-  new WitBox.Dialog({
-    viewport: BorderedViewport, 
-    modal: AlertModal, 
-    callbacks: { '.witbox-ok': okCallback }, 
-    parameters: { 'text': text }, 
+  var d = new WitBox.Dialog({
+    viewport: BorderedViewport,
+    modal: AlertModal,
+    callbacks: { '.witbox-ok': okCallback },
+    parameters: { 'text': text },
     closeOnOverlayClick: true }).show();
+  return d;
 };
 
 WitBoxFactory.showYT = function(yt) {
-  new WitBox.Dialog({
-    viewport: BorderedPinnedViewport, 
-    modal: YTModal, 
-    parameters: { 'yt': yt }, 
+  var d = new WitBox.Dialog({
+    viewport: BorderedPinnedViewport,
+    modal: YTModal,
+    parameters: { 'yt': yt },
     closeOnOverlayClick: true }).show();
+  return d;
 };
 
 WitBoxFactory.showGalery = function(pages) {
-  new WitBox.Dialog({
-    viewport: GaleryViewport, 
-    parameters: { 'pages': pages }, 
+  var d = new WitBox.Dialog({
+    viewport: GaleryViewport,
+    parameters: { 'pages': pages },
     closeOnOverlayClick: true }).show();
+  return d;
 };
 
 WitBoxFactory.show = function(jqobject, callbacks, closeOnOverlayClick) {
-  new WitBox.Dialog({
-    viewport: BorderedPinnedViewport, 
-    modal: CustomModal, 
-    callbacks: callbacks, 
-    parameters: { 'jqobject': jqobject }, 
+  var d = new WitBox.Dialog({
+    viewport: BorderedPinnedViewport,
+    modal: CustomModal,
+    callbacks: callbacks,
+    parameters: { 'jqobject': jqobject },
     closeOnOverlayClick: closeOnOverlayClick }).show();
+  return d;
 };
 
